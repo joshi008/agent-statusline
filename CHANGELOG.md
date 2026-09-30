@@ -2,7 +2,7 @@
 
 All notable changes are recorded here. The project follows [semantic versioning](https://semver.org); before v1.0, minor versions may change config keys or segment ids.
 
-## [Unreleased] — v0.1.0
+## [0.1.0] — 2026-09-30
 
 First release.
 

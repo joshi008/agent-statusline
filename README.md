@@ -11,13 +11,15 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![Go](https://img.shields.io/badge/go-1.25%2B-00ADD8.svg)
 ![Platforms](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)
+[![Release](https://img.shields.io/github/v/release/joshi008/agent-statusline)](https://github.com/joshi008/agent-statusline/releases/latest)
 
-v0.1.0 (unreleased) · maintained by [@joshi008](https://github.com/joshi008) · **pre-1.0**: config keys and segment ids may change before v1.
+[v0.1.0](https://github.com/joshi008/agent-statusline/releases/tag/v0.1.0) · maintained by [@joshi008](https://github.com/joshi008) · **pre-1.0**: config keys and segment ids may change before v1.
 
 ## Contents
 
 - [What it does](#what-it-does) shows how it plugs into each tool, and what it deliberately leaves out.
-- [Quick start](#quick-start) builds it and renders a preview with no tool touched.
+- [Install](#install) covers Homebrew, `go install` and release archives.
+- [Quick start](#quick-start) renders a preview and checks your machine, with no tool touched.
 - [Choosing a setup](#choosing-a-setup) says which command fits what you want.
 - [Usage](#usage) walks through installing, customising, adding your own segments and removing it.
 - [Reference](#reference) lists every tool integration, command, segment and rendering rule.
@@ -59,13 +61,32 @@ flowchart LR
 - It runs no daemon. Each render is one short-lived process.
 - It is not tested on Windows. It builds there, but macOS and Linux are the supported platforms.
 
-## Quick start
+## Install
 
-You need Go 1.25 or newer. From a checkout, build it and render the bundled sample Claude Code session. Nothing on your machine is changed:
+**Homebrew** (macOS and Linux):
 
 ```sh
-make build
-./bin/agent-statusline preview --no-color
+brew install joshi008/tap/agent-statusline
+```
+
+If Homebrew stops with "Your Command Line Tools are too outdated", update them first. Run `softwareupdate --list` and install the Command Line Tools entry it shows, or run `sudo rm -rf /Library/Developer/CommandLineTools && sudo xcode-select --install`. Then run the install again.
+
+**Go** (1.25 or newer):
+
+```sh
+go install github.com/joshi008/agent-statusline/cmd/agent-statusline@latest
+```
+
+**Release archive:** download the archive for your platform from [Releases](https://github.com/joshi008/agent-statusline/releases/latest), check it against `checksums.txt`, and put `agent-statusline` on your `PATH`. On macOS, a binary downloaded through a browser needs `xattr -d com.apple.quarantine agent-statusline` before its first run.
+
+Upgrade with `brew upgrade agent-statusline`, or run `go install ...@latest` again. The tools keep working after an upgrade, because install records the stable `PATH` location rather than a versioned folder.
+
+## Quick start
+
+Render the bundled sample Claude Code session. Nothing on your machine is changed:
+
+```sh
+agent-statusline preview --no-color
 ```
 
 ```text
@@ -76,11 +97,11 @@ ctx ▓▓▓▓░░░░░░ 37% · $1.23 · 5h ▓▓▓▓░░░░�
 Then check what it would do on your machine. `doctor` only reads:
 
 ```sh
-./bin/agent-statusline doctor
+agent-statusline doctor
 ```
 
 ```text
-✓ binary  ~/go/bin/agent-statusline
+✓ binary  /opt/homebrew/bin/agent-statusline
 ✓ config  no file at ~/.config/agent-statusline/config.yaml; using defaults
 ! claude  statusLine runs "bash ~/.claude/statusline-command.sh", not agent-statusline (run `agent-statusline install claude`)
 ! cursor  no statusLine in ~/.cursor/cli-config.json (run `agent-statusline install cursor`)
@@ -107,11 +128,12 @@ Then check what it would do on your machine. `doctor` only reads:
 When: you want Claude Code, Cursor and Codex to use it.
 
 ```sh
-go install github.com/joshi008/agent-statusline/cmd/agent-statusline@latest
-agent-statusline init      # or: agent-statusline install
+agent-statusline init      # guided, with a live preview
+# or
+agent-statusline install   # defaults, into every detected tool
 ```
 
-Install writes the absolute path of the binary into each tool's settings. It prefers the `PATH` entry, so a `brew upgrade` keeps working. Claude Code picks up the change on its next refresh; restart Cursor and Codex.
+Install writes the absolute path of the binary into each tool's settings. It prefers the `PATH` entry, for example `/opt/homebrew/bin/agent-statusline`, so a `brew upgrade` keeps working. Claude Code picks up the change on its next refresh; restart Cursor and Codex.
 
 Remember: install warns whenever it replaces a status line of yours, and `uninstall` puts that line back.
 
@@ -283,7 +305,16 @@ The project follows semantic versioning from v0.1.0. Before v1, config keys and 
 
 ### Releasing
 
-Pushing a `v*` tag runs goreleaser (`.goreleaser.yaml`). It builds darwin and linux archives for amd64 and arm64, and publishes a Homebrew formula to `joshi008/homebrew-tap`.
+To cut a release, add its entry to [CHANGELOG.md](CHANGELOG.md), then tag and push:
+
+```sh
+git tag -a v0.1.1 -m "agent-statusline v0.1.1"
+git push origin v0.1.1
+```
+
+The tag runs `.github/workflows/release.yml`, which uses goreleaser to:
+- build darwin and linux archives for amd64 and arm64, with checksums, into a GitHub Release;
+- commit the updated formula to [`joshi008/homebrew-tap`](https://github.com/joshi008/homebrew-tap), using the `HOMEBREW_TAP_GITHUB_TOKEN` secret.
 
 ### Contributing, security and license
 

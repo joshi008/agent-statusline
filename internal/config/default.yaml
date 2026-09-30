@@ -1,0 +1,56 @@
+# agent-statusline configuration. Every key is optional; missing keys use these defaults.
+# Preview changes with: agent-statusline preview
+version: 1
+
+# Theme: default | gradient | powerline | any name defined under `themes:` below.
+theme: default
+
+# Colour depth: auto | none | basic | 256 | truecolor
+color: auto
+
+# Overrides applied on top of the theme.
+style:
+  # separator: " · "
+  # bar: { width: 10, glyphs: "▓░" }
+  thresholds: { warn: 50, crit: 80 }   # % used → green / yellow / red
+  countdown: true                      # "~1h29m" next to rate limits
+  # emoji: false                       # 🟢 ⚡ 🔥 🚨 on the context segment
+
+# Per-segment options, keyed by segment id.
+segments:
+  # context:  { style: bar+pct, label: ctx }  # pct | bar | bar+pct | tokens | bar+tokens
+  # cost:     { format: "$%.2f" }
+  # dir:      { depth: 1 }                     # 0 = full path
+  # branch:   { max_len: 32 }
+  # pr:       { link: auto }                   # auto | always | never
+
+# Custom segments, referenced in lines as cmd:<id> or text:<id>.
+custom: []
+#  - { id: k8s, run: "kubectl config current-context", ttl: 60s }
+#  - { id: env, text: "prod" }
+
+claude:
+  refresh_interval: 60          # seconds; keeps rate-limit countdowns fresh
+  lines:
+    - [session, model, effort, thinking, fast, dir, branch, git_status, pr, worktree, agent]
+    - [context, cost, limit_5h, limit_7d, spend, cache]
+  subagents:
+    enabled: true
+    format: "{name} {model_short} {ctx_pct} {tokens}"
+
+cursor:
+  update_interval_ms: 300
+  timeout_ms: 1000
+  lines:
+    - [model, max_mode, autorun, dir, branch, git_status, pr, worktree]
+    - [context, vim]
+
+codex:
+  # Segment ids or raw Codex item ids. Segments Codex cannot show are skipped.
+  items: [model, effort, context, limit_5h, limit_7d, cost, branch]
+
+# Your own themes; same keys as the built-ins. `extends` inherits from another theme.
+themes: {}
+#  mine:
+#    extends: default
+#    colors: { accent: "#7aa2f7", ok: "#9ece6a", warn: "#e0af68", crit: "#f7768e" }

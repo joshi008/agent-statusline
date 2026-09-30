@@ -1,0 +1,12 @@
+{
+  "session_id": "00000000-0000-0000-0000-000000000002",
+  "transcript_path": "/Users/example/.cursor/chats/fixture-chat/transcript.jsonl",
+  "render_width_chars": 76,
+  "cwd": "/Users/example/Projects/status-bar",
+  "autorun": true,
+  "model": { "id": "auto", "display_name": "Auto", "max_mode": true },
+  "workspace": { "current_dir": "/Users/example/Projects/status-bar", "project_dir": "/Users/example/Projects/status-bar", "added_dirs": [] },
+  "version": "2026.09.15",
+  "output_style": { "name": "compact" },
+  "context_window": { "total_input_tokens": null, "total_output_tokens": 0, "context_window_size": null, "used_percentage": null, "remaining_percentage": null, "current_usage": null }
+}

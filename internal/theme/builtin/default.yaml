@@ -1,0 +1,23 @@
+separator: " · "
+bar_glyphs: "▓░"
+bar_width: 10
+gradient: false
+emoji: false
+colors:
+  plain: ""
+  bold: bold
+  dim: dim
+  sep: dim
+  label: dim
+  accent: cyan
+  ok: green
+  warn: yellow
+  crit: red
+  session: cyan bold
+  model: bold
+  effort: magenta
+  cost: ""
+  dir: blue
+  repo: bold
+  branch: cyan
+  bar_empty: dim

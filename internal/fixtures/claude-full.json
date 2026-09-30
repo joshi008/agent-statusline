@@ -1,0 +1,54 @@
+{
+  "cwd": "/Users/example/Projects/status-bar",
+  "session_id": "00000000-0000-0000-0000-000000000001",
+  "session_name": "status-bar research",
+  "prompt_id": "550e8400-e29b-41d4-a716-446655440000",
+  "transcript_path": "/Users/example/.claude/projects/-Users-example-Projects-status-bar/fixture-session.jsonl",
+  "version": "2.1.283",
+  "model": { "id": "claude-fable-5-1[1m]", "display_name": "Fable 5.1" },
+  "workspace": {
+    "current_dir": "/Users/example/Projects/status-bar",
+    "project_dir": "/Users/example/Projects/status-bar",
+    "added_dirs": ["/tmp"],
+    "repo": { "host": "github.com", "owner": "example", "name": "status-bar" }
+  },
+  "output_style": { "name": "default" },
+  "cost": {
+    "total_cost_usd": 1.2345,
+    "total_duration_ms": 2712000,
+    "total_api_duration_ms": 640000,
+    "total_lines_added": 156,
+    "total_lines_removed": 23
+  },
+  "context_window": {
+    "total_input_tokens": 372000,
+    "total_output_tokens": 4100,
+    "context_window_size": 1000000,
+    "used_percentage": 37.2,
+    "remaining_percentage": 62.8,
+    "current_usage": {
+      "input_tokens": 2000,
+      "output_tokens": 4100,
+      "cache_creation_input_tokens": 12000,
+      "cache_read_input_tokens": 358000
+    }
+  },
+  "exceeds_200k_tokens": true,
+  "prompt_cache": {
+    "warm": true, "caching_observed": true, "ttl": "1h", "expires_at": 1790000000,
+    "requests": 14, "misses": 2, "expected_rebuilds": 1, "hit_ratio": 0.91,
+    "cache_write_tokens": 352000, "miss_recache_tokens": 310200,
+    "last_miss_at": 1789996400,
+    "last_miss_cause": { "causes": ["tools_changed"], "tools_added": 2, "tools_removed": 0 },
+    "miss_causes": { "tools_changed": 2 },
+    "recache_tokens_if_cold": 45000
+  },
+  "fast_mode": false,
+  "effort": { "level": "high" },
+  "thinking": { "enabled": true },
+  "rate_limits": {
+    "five_hour": { "used_percentage": 42, "resets_at": 1790001400 },
+    "seven_day": { "used_percentage": 71, "resets_at": 1790300000 }
+  },
+  "pr": { "number": 42, "url": "https://github.com/example/status-bar/pull/42", "review_state": "pending" }
+}

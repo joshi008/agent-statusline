@@ -1,0 +1,33 @@
+{
+  "session_id": "00000000-0000-0000-0000-000000000002",
+  "transcript_path": "/Users/example/.cursor/chats/fixture-chat/transcript.jsonl",
+  "render_width_chars": 156,
+  "cwd": "/Users/example/Projects/status-bar",
+  "autorun": false,
+  "model": {
+    "id": "grok-4.6",
+    "display_name": "Cursor Grok 4.6 High",
+    "param_summary": "effort high"
+  },
+  "workspace": {
+    "current_dir": "/Users/example/Projects/status-bar",
+    "project_dir": "/Users/example/Projects/status-bar",
+    "added_dirs": []
+  },
+  "version": "2026.09.15",
+  "output_style": { "name": "default" },
+  "context_window": {
+    "total_input_tokens": 61000,
+    "total_output_tokens": 4200,
+    "context_window_size": 200000,
+    "used_percentage": 30.5,
+    "remaining_percentage": 69.5,
+    "current_usage": {
+      "input_tokens": 8500,
+      "output_tokens": 1200,
+      "cache_creation_input_tokens": 5000,
+      "cache_read_input_tokens": 2000
+    }
+  },
+  "session_name": "status-bar research"
+}

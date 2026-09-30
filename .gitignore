@@ -1,0 +1,5 @@
+/dist/
+/bin/
+*.agent-statusline.bak.*
+.DS_Store
+.superpowers/

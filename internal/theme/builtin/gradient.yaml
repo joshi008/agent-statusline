@@ -1,0 +1,15 @@
+extends: default
+separator: " | "
+bar_glyphs: "█░"
+bar_width: 20
+gradient: true
+emoji: true
+colors:
+  repo: yellow bold
+  branch: cyan bold
+  model: magenta
+  cost: yellow
+  bar_empty: "#3c3c3c"
+icons:
+  branch: "🌿"
+  model: "🤖"

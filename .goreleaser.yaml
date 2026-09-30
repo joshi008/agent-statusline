@@ -1,0 +1,53 @@
+version: 2
+project_name: agent-statusline
+
+before:
+  hooks:
+    - go mod tidy
+    - go test ./... -count=1 -short
+
+builds:
+  - id: agent-statusline
+    main: ./cmd/agent-statusline
+    binary: agent-statusline
+    env: [CGO_ENABLED=0]
+    goos: [darwin, linux]
+    goarch: [amd64, arm64]
+    flags: [-trimpath]
+    ldflags:
+      - -s -w
+      - -X github.com/joshi008/agent-statusline/internal/cli.Version={{ .Version }}
+      - -X github.com/joshi008/agent-statusline/internal/cli.Commit={{ .ShortCommit }}
+      - -X github.com/joshi008/agent-statusline/internal/cli.Date={{ .Date }}
+
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files: [README.md, LICENSE]
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  sort: asc
+  filters:
+    exclude: ["^docs:", "^test:", "^chore:"]
+
+brews:
+  - name: agent-statusline
+    repository:
+      owner: joshi008
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    directory: Formula
+    homepage: https://github.com/joshi008/agent-statusline
+    description: One status line for Claude Code, Cursor CLI and Codex
+    license: MIT
+    install: |
+      bin.install "agent-statusline"
+    test: |
+      system "#{bin}/agent-statusline", "version"
+    caveats: |
+      Run `agent-statusline init` to choose a layout and wire your tools,
+      or `agent-statusline install` to use the defaults.
+

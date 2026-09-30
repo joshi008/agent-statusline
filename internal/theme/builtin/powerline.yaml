@@ -1,0 +1,14 @@
+extends: default
+separator: " \uE0B1 "
+bar_glyphs: "█░"
+colors:
+  accent: "#7aa2f7"
+  ok: "#9ece6a"
+  warn: "#e0af68"
+  crit: "#f7768e"
+  branch: "#bb9af7"
+  model: "#7dcfff bold"
+icons:
+  branch: "\uE0A0"
+  dir: "\uF07C"
+  model: "\U000F06A9"

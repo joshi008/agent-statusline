@@ -30,22 +30,25 @@
 
 `agent-statusline` is one Go binary that owns the status line of three coding agents. Claude Code and Cursor CLI run it as a command and pipe session JSON to it. Codex CLI has no command hook, so the binary instead writes Codex's own list of built-in footer items.
 
+How a render works, each time the tool refreshes:
+
 ```mermaid
 flowchart LR
-  CFG[(config.yaml<br/>layout · theme · segments)] --> ENGINE
-  CC[Claude Code] -- session JSON on stdin --> ENGINE
-  CU[Cursor CLI] -- session JSON on stdin --> ENGINE
-  subgraph ENGINE["agent-statusline render"]
-    direction LR
-    P[parse payload] --> EN[enrich<br/>git · gh · custom cmds<br/>cached, 500 ms cap]
-    EN --> S[segments] --> L[fit to width<br/>+ paint theme]
-  end
-  L -- ANSI lines on stdout --> CC
-  L -- ANSI lines on stdout --> CU
-  CFG --> INST[agent-statusline install]
-  INST -- statusLine keys --> CC
-  INST -- statusLine key --> CU
-  INST -- tui.status_line items --> CX[Codex CLI]
+  T["Claude Code<br/>Cursor CLI"] -- "session JSON on stdin" --> P[parse payload]
+  P --> E["enrich<br/>git · gh · custom cmds<br/>cached, 500 ms cap"]
+  E --> S[segments]
+  S --> F["fit to width<br/>+ paint theme"]
+  F -- "ANSI lines on stdout" --> B["status bar<br/>in the tool"]
+```
+
+What `install` writes:
+
+```mermaid
+flowchart LR
+  C[("config.yaml")] --> I["agent-statusline install"]
+  I -- "statusLine + subagentStatusLine" --> CC["~/.claude/settings.json"]
+  I -- "statusLine" --> CU["~/.cursor/cli-config.json"]
+  I -- "[tui].status_line items" --> CX["~/.codex/config.toml"]
 ```
 
 - **`render`** turns a Claude Code or Cursor payload into one or more coloured lines. It never exits non-zero and never prints nothing.
